@@ -34,7 +34,7 @@ def main(board: np.array) -> tuple[np.array, np.array]:
     max_iter = 40000
     fitnesses = np.array([])
     current_fitness = get_fitness(board)
-    T = 1.0
+    temperature = 1.0
     cooling_rate = 0.99
     while current_fitness < 0 and iter < max_iter:
         new_board = board.copy()
@@ -45,11 +45,11 @@ def main(board: np.array) -> tuple[np.array, np.array]:
             board = new_board
             current_fitness = new_fitness
         else:
-            p = np.exp((new_fitness - current_fitness) / T)
+            p = np.exp((new_fitness - current_fitness) / temperature)
             if p > np.random.rand():
                 board = new_board
                 current_fitness = new_fitness
-        T *= cooling_rate
+        temperature *= cooling_rate
 
         iter += 1
         fitnesses = np.append(fitnesses, current_fitness)
