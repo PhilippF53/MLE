@@ -17,14 +17,9 @@ def get_fitness(board: np.array) -> int:
 
 def swap(board: np.array) -> np.array:
     row = np.random.randint(0, 9)
-
     idx1 = np.random.randint(0, 9)
     idx2 = np.random.randint(0, 9)
-    num1 = board[row, idx1]
-    num2 = board[row, idx2]
-
-    board[row, idx1] = num2
-    board[row, idx2] = num1
+    board[row, idx1], board[row, idx2] = board[row, idx2], board[row, idx1]
 
     return board
 
@@ -54,6 +49,7 @@ def main(board: np.array) -> tuple[np.array, np.array]:
         iter += 1
         fitnesses = np.append(fitnesses, current_fitness)
 
+    print(iter)
     return board, fitnesses
 
 
