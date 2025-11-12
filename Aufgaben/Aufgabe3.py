@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 POPULATION_SIZE = 500
 PARAMETER_SIZE = 32
 INDIVIDUAL_SIZE = 4 * PARAMETER_SIZE  # 4 Parameter
-CROSSOVER_RATE = 0.7
-MUTATION_RATE = 0.2
+CROSSOVER_RATE = 0.6
+MUTATION_RATE = 0.1
 GENERATIONS = 100
 PARAMETER_RANGE = (-5.0, 5.0)
 
@@ -52,7 +52,42 @@ def fitness(population: np.array) -> np.array:
 
 
 # TODO: tournament selection
-def selection(population: np.array, fitnesses: np.array) -> np.array:
+# def selection(population: np.array, fitnesses: np.array) -> np.array:
+#     total_fitness = np.sum(fitnesses)
+#     selection_probs = fitnesses / total_fitness
+
+#     # Wähle Indizes für die Eltern basierend auf den Wahrscheinlichkeiten
+#     parent_indices = np.random.choice(
+#         np.arange(len(population)), size=len(population), p=selection_probs
+#     )
+#     return population[parent_indices]
+
+
+def selection(
+    population: np.array,
+    fitnesses: np.array,
+    mode: str = "tournament",
+    tournament_size: int = 2,
+) -> np.array:
+    if mode == "tournament":
+        new_population = np.empty_like(population)
+        population_size = len(population)
+        for i in range(population_size):
+            # Select k random individuals for the tournament
+            tournament_indices = np.random.choice(
+                population_size, size=tournament_size, replace=False
+            )
+            tournament_fitnesses = fitnesses[tournament_indices]
+
+            # Find the winner of the tournament (the one with the highest fitness)
+            winner_index_in_tournament = np.argmax(tournament_fitnesses)
+            winner_index_in_population = tournament_indices[winner_index_in_tournament]
+
+            # Add the winner to the new population
+            new_population[i] = population[winner_index_in_population]
+
+        return new_population
+
     total_fitness = np.sum(fitnesses)
     selection_probs = fitnesses / total_fitness
 
