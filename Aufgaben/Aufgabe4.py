@@ -310,7 +310,7 @@ def dump_qtable(q_table: dict):
 
 
 # Main game function
-def main(q_table):
+def main(q_table, labyrinth):
     clock = pygame.time.Clock()
 
     # Initialize Pacman and Ghost positions
@@ -410,7 +410,8 @@ if __name__ == "__main__":
     successes = 0
     fails = 0
     for i in range(10):
-        success = main(q_table)
+        labyrinth = ["##########", "#........#", "#.##..##.#", "#........#", "##########"]
+        success = main(q_table, labyrinth)
         if success:
             successes += 1
         else:
