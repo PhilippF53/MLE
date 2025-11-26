@@ -60,7 +60,7 @@ def knn(test_sample, training_samples, training_labels, k):
 
 
 if __name__ == "__main__":
-    k = 1
+    k = 5
     num_samples = 1000
     training_samples, training_labels, test_samples, test_labels = parse_mnist_data(
         "./assets/train_img.idx",
